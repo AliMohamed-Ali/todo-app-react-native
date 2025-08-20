@@ -1,8 +1,8 @@
-import useTheme from "@/hooks/useTheme";
+import useTheme, { ColorScheme } from "@/hooks/useTheme";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-
 export default function Index() {
-  const { toggleTheme } = useTheme();
+  const { toggleTheme, colors } = useTheme();
+  const styles = createStyles(colors);
   return (
     <View style={styles.container}>
       <Text>Hello</Text>
@@ -16,10 +16,16 @@ export default function Index() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
+const createStyles = (colors: ColorScheme) => {
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: colors.bg,
+    },
+    text: {
+      color: colors.text,
+    },
+  });
+};
