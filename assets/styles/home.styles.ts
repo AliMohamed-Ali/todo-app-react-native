@@ -169,9 +169,9 @@ export const createHomeStyles = (colors: ColorScheme) => {
       gap: 12,
     },
     actionButton: {
-      width: 40,
-      height: 40,
-      borderRadius: 20,
+      width: 30,
+      height: 30,
+      borderRadius: 15,
       justifyContent: "center",
       alignItems: "center",
     },
