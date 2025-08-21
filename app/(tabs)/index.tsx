@@ -1,31 +1,23 @@
-import useTheme, { ColorScheme } from "@/hooks/useTheme";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { createHomeStyles } from "@/assets/styles/home.styles";
+import Header from "@/components/Header";
+import TodoInput from "@/components/TodoInput";
+import useTheme from "@/hooks/useTheme";
+import { LinearGradient } from "expo-linear-gradient";
+import { StatusBar } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 export default function Index() {
   const { toggleTheme, colors } = useTheme();
-  const styles = createStyles(colors);
+  const homeStyles = createHomeStyles(colors);
   return (
-    <View style={styles.container}>
-      <Text>Hello</Text>
-      <TouchableOpacity
-        onPress={toggleTheme}
-        style={{ padding: 10, backgroundColor: "#ccc", borderRadius: 5 }}
-      >
-        <Text>Change Theme</Text>
-      </TouchableOpacity>
-    </View>
+    <LinearGradient
+      colors={colors.gradients.background}
+      style={homeStyles.container}
+    >
+      <SafeAreaView style={homeStyles.safeArea}>
+        <Header />
+        <TodoInput />
+      </SafeAreaView>
+      <StatusBar barStyle={colors.statusBarStyle} />
+    </LinearGradient>
   );
 }
-
-const createStyles = (colors: ColorScheme) => {
-  return StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: colors.bg,
-    },
-    text: {
-      color: colors.text,
-    },
-  });
-};
