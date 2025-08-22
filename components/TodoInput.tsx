@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import { Alert, TextInput, TouchableOpacity, View } from "react-native";
 
 const TodoInput = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const { colors } = useTheme();
   const homeStyles = createHomeStyles(colors);
   const [newTodo, setNewTodo] = useState("");
@@ -16,11 +17,14 @@ const TodoInput = () => {
   const handleAddTodo = async () => {
     if (newTodo.trim()) {
       try {
+        setIsLoading(true);
         await addTodo({ text: newTodo.trim() });
         setNewTodo("");
       } catch (error) {
         Alert.alert("Error", "Failed to add todo. Please try again.");
         console.error("Error adding todo:", error);
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -40,7 +44,7 @@ const TodoInput = () => {
         />
         <TouchableOpacity
           onPress={handleAddTodo}
-          disabled={!newTodo.trim()}
+          disabled={!newTodo.trim() || isLoading}
           activeOpacity={0.8}
         >
           <LinearGradient
