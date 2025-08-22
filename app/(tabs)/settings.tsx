@@ -1,17 +1,15 @@
 import { createSettingsStyles } from "@/assets/styles/settings.styles";
+import Preferences from "@/components/Preferences";
 import ProgressStats from "@/components/ProgressStats";
 import useTheme from "@/hooks/useTheme";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Settings = () => {
-  const [isAutoSync, setIsAutoSync] = React.useState(true);
-  const [isNotificationsEnabled, setIsNotificationsEnabled] =
-    React.useState(true);
-  const { toggleTheme, isDarkMode, colors } = useTheme();
+  const { colors } = useTheme();
   const settingsStyles = createSettingsStyles(colors);
   return (
     <LinearGradient
@@ -31,17 +29,14 @@ const Settings = () => {
             <Text style={settingsStyles.title}>Settings</Text>
           </View>
         </View>
-        <ScrollView style={settingsStyles.scrollView}
-        
+        <ScrollView
+          style={settingsStyles.scrollView}
           contentContainerStyle={settingsStyles.content}
           showsVerticalScrollIndicator={false}
-
-          >
-
-            <ProgressStats/>
-
-
-          </ScrollView>
+        >
+          <ProgressStats />
+          <Preferences />
+        </ScrollView>
       </SafeAreaView>
     </LinearGradient>
   );
