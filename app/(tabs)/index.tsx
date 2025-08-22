@@ -5,30 +5,16 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import TodoInput from "@/components/TodoInput";
 import TodoItem from "@/components/TodoItem";
 import { api } from "@/convex/_generated/api";
-import { Id } from "@/convex/_generated/dataModel";
 import useTheme from "@/hooks/useTheme";
-import { useMutation, useQuery } from "convex/react";
+import { useQuery } from "convex/react";
 import { LinearGradient } from "expo-linear-gradient";
-import { Alert, FlatList, StatusBar } from "react-native";
+import { FlatList, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 export default function Index() {
   const { colors } = useTheme();
   const homeStyles = createHomeStyles(colors);
   const todos = useQuery(api.todos.getTodos);
   const isLoading = !todos;
-  const toggleTodo = useMutation(api.todos.toggleTodo);
-
-  const handleIsCompletedToggle = async (id: Id<"todos">) => {
-    try {
-      await toggleTodo({ id });
-    } catch (error) {
-      Alert.alert(
-        "Error",
-        "There was an error toggling the todo completion. Please try again."
-      );
-      console.error("Error toggling todo completion:", error);
-    }
-  };
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -45,15 +31,11 @@ export default function Index() {
         <FlatList
           data={todos}
           keyExtractor={(item) => item._id}
-          renderItem={({ item }) => (
-            <TodoItem
-              item={item}
-              handleIsCompletedToggle={handleIsCompletedToggle}
-            />
-          )}
+          renderItem={({ item }) => <TodoItem item={item} />}
           contentContainerStyle={homeStyles.todoListContent}
           style={homeStyles.todoList}
           ListEmptyComponent={<EmptyState />}
+          showsVerticalScrollIndicator={false}
         />
       </SafeAreaView>
       <StatusBar barStyle={colors.statusBarStyle} />
